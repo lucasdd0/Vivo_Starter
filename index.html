@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Vivo Starter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .vivo-purple { background-color: #660099; }
+        .vivo-purple-text { color: #660099; }
+        .vivo-pink { background-color: #E6007E; }
+        .vivo-pink-text { color: #E6007E; }
+        .vivo-light-purple { background-color: #f4e9fa; }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #660099;
+            text-align: center;
+        }
+        .subsection-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4A0072;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 2rem; 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(102, 0, 153, 0.15);
+            cursor: pointer;
+        }
+        nav a {
+            transition: color 0.3s ease;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        nav a:hover, nav a.active-link {
+            color: #E6007E;
+            background-color: rgba(230, 0, 126, 0.05);
+        }
+        .chart-container-wrapper {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+        .chart-container {
+            max-width: 500px;
+            margin: 0 auto;
+            height: 300px;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .hero-btn, .canva-btn {
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            font-weight: 600; 
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .hero-btn:hover, .canva-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .icon-placeholder {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        .menu-hidden {
+            transform: translateX(100%);
+        }
+        .menu-visible {
+            transform: translateX(0);
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        body.modal-active {
+            overflow: hidden;
+        }
+
+        /* Estilos para o Diagrama de Arquitetura Visual */
+        .arch-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem; /* Espaçamento entre as camadas principais */
+            padding: 1.5rem;
+            background-color: #f9fafb; /* bg-gray-50 */
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #e5e7eb; /* border-gray-200 */
+        }
+        .arch-layer {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 1rem; /* Espaçamento entre caixas na mesma camada */
+            flex-wrap: wrap;
+        }
+        .arch-box {
+            background-color: white;
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            border-radius: 0.375rem; /* rounded-md */
+            padding: 0.75rem 1rem; /* py-3 px-4 */
+            text-align: center;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+            font-size: 0.875rem; /* text-sm */
+            min-width: 120px;
+        }
+        .arch-box strong {
+            display: block;
+            font-weight: 600; /* font-semibold */
+            color: #660099; /* vivo-purple-text */
+            margin-bottom: 0.25rem;
+        }
+        .arch-arrow {
+            font-size: 1.5rem; /* text-2xl */
+            color: #9ca3af; /* text-gray-400 */
+            margin: 0.25rem 0;
+        }
+        .arch-connectors {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .arch-connector-line {
+            height: 20px; /* Altura da linha vertical */
+            width: 2px;   /* Largura da linha */
+            background-color: #9ca3af; /* text-gray-400 */
+        }
+
+
+        @media (max-width: 768px) {
+            .chart-container { height: 250px; }
+            .section-title { font-size: 2rem; }
+            .subsection-title { font-size: 1.375rem; }
+            .nav-links { display: none; }
+            .mobile-menu-button { display: block; }
+            .modal-content { padding: 1.5rem; }
+            .arch-box { font-size: 0.75rem; padding: 0.5rem; min-width: 100px;}
+            .arch-layer { flex-direction: column; align-items: center;}
+        }
+        @media (min-width: 769px) {
+            .mobile-menu-button { display: none; }
+            #mobile-menu { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <nav class="sticky-nav">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="text-3xl font-bold vivo-purple-text">Vivo <span class="vivo-pink-text">Starter</span></a>
+                <div class="hidden md:flex space-x-2 nav-links">
+                    <a href="#desafio" class="text-gray-700">O Desafio</a>
+                    <a href="#solucao" class="text-gray-700">Solução</a>
+                    <a href="#viabilidade" class="text-gray-700">Viabilidade</a>
+                    <a href="#futuro" class="text-gray-700">Futuro</a>
+                    <a href="#contato" class="text-gray-700">Contato</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-toggler" class="mobile-menu-button text-gray-700 hover:text-vivo-pink-text focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-white p-6 menu-hidden z-40 flex flex-col items-center justify-center space-y-6">
+            <button id="mobile-menu-close" class="absolute top-6 right-6 text-gray-700 hover:text-vivo-pink-text">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <a href="#desafio" class="block text-2xl text-gray-800 hover:vivo-pink-text mobile-nav-link">O Desafio</a>
+            <a href="#solucao" class="block text-2xl text-gray-800 hover:vivo-pink-text mobile-nav-link">Solução</a>
+            <a href="#viabilidade" class="block text-2xl text-gray-800 hover:vivo-pink-text mobile-nav-link">Viabilidade</a>
+            <a href="#futuro" class="block text-2xl text-gray-800 hover:vivo-pink-text mobile-nav-link">Futuro</a>
+            <a href="#contato" class="block text-2xl text-gray-800 hover:vivo-pink-text mobile-nav-link">Contato</a>
+        </div>
+    </nav>
+
+    <header class="vivo-purple text-white py-24 sm:py-32 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-pink-500 opacity-20 rounded-full -translate-x-1/3 -translate-y-1/3 filter blur-2xl"></div>
+        <div class="absolute bottom-0 right-0 w-72 h-72 bg-purple-400 opacity-20 rounded-full translate-x-1/4 translate-y-1/4 filter blur-2xl"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Bem-vindo ao <span class="vivo-pink-text">Vivo Starter</span>
+            </h1>
+            <p class="text-xl sm:text-2xl mb-10 max-w-2xl mx-auto">
+                Revolucionando a integração de novos talentos na Vivo com inteligência e engajamento.
+            </p>
+            <a href="#desafio" class="hero-btn bg-white vivo-purple-text text-lg shadow-lg hover:bg-gray-100">
+                Descubra Mais
+            </a>
+        </div>
+    </header>
+
+    <section id="desafio" class="py-16 lg:py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">O Desafio do Onboarding Atual</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-gray-700">
+                    <p class="text-lg mb-6">A integração de novos colaboradores é um momento crucial. No entanto, muitos enfrentam dificuldades como:</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Fragmentação de informações importantes.</li>
+                        <li class="flex items-start"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Baixo engajamento com processos tradicionais.</li>
+                        <li class="flex items-start"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Dificuldade de adaptação à cultura e ferramentas.</li>
+                        <li class="flex items-start"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Impacto na produtividade e retenção de talentos.</li>
+                    </ul>
+                    <p class="text-lg bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">Dados indicam que <strong class="vivo-purple-text">70% dos novos colaboradores</strong> se sentem perdidos ou sobrecarregados nos primeiros meses, um desafio que o <strong class="vivo-pink-text">Vivo Starter</strong> visa solucionar.</p>
+                </div>
+                <div class="chart-container-wrapper">
+                    <h3 class="subsection-title text-center mb-4">Colaboradores Perdidos no Onboarding</h3>
+                    <div class="chart-container" style="height: 320px;"><canvas id="desafioChart"></canvas></div>
+                    <p class="text-sm text-gray-500 mt-4 text-center">Fonte: Pesquisa interna (fictícia) / Dados de mercado.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solucao" class="py-16 lg:py-24 vivo-light-purple">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">Apresentando o <span class="vivo-pink-text">Vivo Starter</span></h2>
+            <p class="text-xl text-gray-700 text-center mb-16 max-w-3xl mx-auto">
+                Uma plataforma de integração inteligente e gamificada, desenhada para transformar a jornada inicial do novo colaborador na Vivo, oferecendo uma experiência centralizada e engajadora.
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card feature-card flex flex-col"><img src="imagens/Tela_Trilha.png" alt="[Imagem da Tela da Trilha de Integração do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Trilhas Personalizadas</h3><p class="text-gray-600 text-sm flex-grow card-description">Aprendizado adaptado ao cargo, com gamificação para motivar. Acompanhe progresso e prazos de forma clara no dashboard principal.</p></div>
+                <div class="card feature-card flex flex-col"><img src="imagens/Tela_Ferramentas.png" alt="[Imagem da Tela de Ferramentas Necessárias do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Hub de Ferramentas</h3><p class="text-gray-600 text-sm flex-grow card-description">Acesso e solicitação simplificada de ferramentas essenciais (VS Code, Jira, Slack), com status de aprovação transparente.</p></div>
+                <div class="card feature-card flex flex-col"><img src="imagens/Tela_Equipe.png" alt="[Imagem da Tela de Equipa e Organograma do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Conheça sua Equipa</h3><p class="text-gray-600 text-sm flex-grow card-description">Visualização clara da estrutura da equipa e organograma, facilitando a compreensão e o contacto com colegas e liderança.</p></div>
+                <div class="card feature-card flex flex-col"><img src="imagens/Tela_Docs.png" alt="[Imagem da Tela de Documentação do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Documentação Inteligente</h3><p class="text-gray-600 text-sm flex-grow card-description">Manuais, políticas e guias organizados e acessíveis, com busca inteligente para encontrar informações rapidamente.</p></div>
+                <div class="card feature-card flex flex-col"><img src="imagens/Tela_Explore.png" alt="[Imagem da Tela de Explore as Plataformas Vivo do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Explore Plataformas Vivo</h3><p class="text-gray-600 text-sm flex-grow card-description">Diretório para conhecer e aceder a outras plataformas internas da Vivo (Vibe, Gov App, Confluence), centralizando os pontos de partida.</p></div>
+                <div class="card feature-card flex flex-col"><img src="imagens/Tela_Chat.png" alt="[Imagem da Tela do Vivo Help, o chatbot inteligente]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Vivo Help – Suporte IA</h3><p class="text-gray-600 text-sm flex-grow card-description">Chatbot com IA para tirar dúvidas em tempo real sobre processos e ferramentas, aprendendo continuamente. Suporte imediato.</p></div>
+            </div>
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Explore os nossos Protótipos Interativos</h3>
+                <p class="text-gray-600 mb-6 max-w-xl mx-auto">Desenvolvemos as telas da plataforma no Canva para proporcionar uma visão navegável da experiência do utilizador. Clique abaixo para explorar!</p>
+                <a href="https://www.figma.com/proto/JXv7MYJAmdP0wHkCpR3kO5/Untitled?node-id=2060-1155&p=f&t=s4D6NuIEG0soZ8WR-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A3" target="_blank" rel="noopener noreferrer" class="canva-btn vivo-pink text-white text-lg shadow-lg hover:bg-purple-600"><svg class="icon-placeholder inline-block -ml-1 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>Ver Protótipo no Canva</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="viabilidade" class="py-16 lg:py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">Detalhes Técnicos e Viabilidade</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <div class="card">
+                        <h3 class="subsection-title flex items-center">
+                            <svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            Arquitetura e Integrações
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-sm">
+                            <li><strong>Frontend:</strong> React para uma UI moderna e responsiva.</li>
+                            <li><strong>Backend:</strong> Node.js com APIs RESTful.</li>
+                            <li><strong>Banco de Dados:</strong> PostgreSQL.</li>
+                            <li><strong>IA (Vivo Help & Personalização):</strong> NLP, treino com base de conhecimento Vivo.</li>
+                            <li><strong>Integrações Chave:</strong> MYACCESS (acessos), SAP (dados de RH), APIs de plataformas Vivo.</li>
+                        </ul>
+                        <div class="mt-6 arch-diagram">
+                            <div class="arch-box"><strong>Utilizador</strong>(Navegador)</div>
+                            <div class="arch-arrow">↓</div>
+                            <div class="arch-box"><strong>Frontend (React)</strong>UI & Interação</div>
+                            <div class="arch-arrow">↓ <span class="text-xs text-gray-500">(API Calls)</span></div>
+                            <div class="arch-box"><strong>Backend (Node.js)</strong>Lógica & Orquestração</div>
+                            
+                            <div class="arch-connectors">
+                                <div class="arch-connector-line"></div>
+                                <div class="arch-connector-line"></div>
+                                <div class="arch-connector-line"></div>
+                            </div>
+
+                            <div class="arch-layer">
+                                <div class="arch-box"><strong>Base de Dados</strong>(PostgreSQL)<br><span class="text-xs text-gray-500">Dados do Utilizador, Conteúdo, Progresso</span></div>
+                                <div class="arch-box"><strong>Serviço de IA</strong>(Vivo Help & Pers.)<br><span class="text-xs text-gray-500">NLP, Base Conhecimento</span></div>
+                                <div class="arch-box"><strong>Sistemas Externos</strong>(Vivo)<br><span class="text-xs text-gray-500">SAP, MYACCESS, APIs</span></div>
+                            </div>
+                             <p class="text-xs text-gray-500 mt-3 text-center">Este é um diagrama conceitual simplificado.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="width: 1485px;">
+                         <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Benchmarking e Diferenciais</h3>
+                        <p class="text-gray-700 mb-3 text-sm">Analisamos soluções como Google Onboarding e Salesforce, além de plataformas de ATS/RH.</p>
+                        <p class="text-gray-700 font-semibold text-sm">Os nossos Diferenciais:</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
+                            <li>Hiper-personalização para o contexto Vivo.</li>
+                            <li>Integração profunda com sistemas internos.</li>
+                            <li>Chatbot especialista (Vivo Help).</li>
+                            <li>Foco no setor de telecomunicações.</li>
+                        </ul>
+                        <div class="flex space-x-3 mt-4 justify-center">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Google</span>
+                            <span class="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-medium">Salesforce</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">Outras ATS</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="chart-container-wrapper">
+                        <h3 class="subsection-title text-center">Viabilidade Financeira (Estimativa)</h3>
+                        <div class="chart-container" style="height: 300px;"><canvas id="custosChart"></canvas></div>
+                        <p class="text-xs text-gray-500 mt-3 text-center">Custos de MVP estimados. Detalhes no apêndice.</p>
+                    </div>
+                    <div class="chart-container-wrapper mt-8" style="height: 541px; align-content: center;">
+                        <h3 class="subsection-title text-center">Projeção de ROI e Benefícios</h3>
+                         <div class="chart-container" style="height: 300px;"><canvas id="roiChart"></canvas></div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 mt-4 text-sm pl-4">
+                            <li>Redução de <strong class="vivo-purple-text">25%</strong> no tempo de onboarding.</li>
+                            <li>Aumento de <strong class="vivo-purple-text">40%</strong> no engajamento com formações.</li>
+                            <li>Potencial de redução de turnover em <strong class="vivo-purple-text">15%</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container-wrapper mt-12 lg:mt-16">
+                <h3 class="subsection-title text-center">Métricas de Sucesso Quantificadas</h3>
+                <div class="chart-container" style="max-width: 480px; height: 320px;"><canvas id="metricasChart"></canvas></div>
+                <p class="text-gray-700 mt-4 text-center text-sm">Acompanharemos KPIs como taxa de conclusão, tempo médio, NPS, engajamento e redução de chamados.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="futuro" class="py-16 lg:py-24 vivo-light-purple">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">Futuro e Adoção</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>Roadmap de Desenvolvimento</h3>
+                    <ul class="space-y-4">
+                        <li class="border-l-4 border-purple-500 pl-4 py-2 hover:bg-purple-50 transition-colors duration-200 rounded-r-md"><strong class="block vivo-purple-text text-sm">Fase 1 (MVP - 3-4 meses):</strong> Funcionalidades core (Trilhas, Ferramentas, Docs, Vivo Help básico).</li>
+                        <li class="border-l-4 border-purple-500 pl-4 py-2 hover:bg-purple-50 transition-colors duration-200 rounded-r-md"><strong class="block vivo-purple-text text-sm">Fase 2 (6-9 meses):</strong> Integrações SAP/MYACCESS, IA robusta, gamificação avançada.</li>
+                        <li class="border-l-4 border-purple-500 pl-4 py-2 hover:bg-purple-50 transition-colors duration-200 rounded-r-md"><strong class="block vivo-purple-text text-sm">Fase 3 (12+ meses):</strong> Módulos de desenvolvimento contínuo, dashboards para gestores.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Plano de Adoção e Engajamento</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 text-sm">
+                        <li>Comunicação interna estratégica (lançamento, intranet).</li>
+                        <li>Formação para gestores e colaboradores.</li>
+                        <li>Criação de uma rede de "Embaixadores Vivo Starter".</li>
+                        <li>Gamificação e incentivos para motivar o uso.</li>
+                        <li>Recolha contínua de feedback para melhorias.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mt-12 lg:mt-16">
+                <h3 class="subsection-title">Depoimentos (Impacto Humano)</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <blockquote class="bg-purple-50 p-6 rounded-lg shadow-sm border-l-4 border-pink-500"><p class="text-gray-700 italic text-sm">"Com o Vivo Starter, senti-me acolhida e encontrei tudo num só lugar. O Vivo Help salvou o meu primeiro dia! Concluí o meu onboarding 30% mais rápido."</p><footer class="mt-3 text-xs vivo-purple-text font-semibold">- Ana, Nova Programadora Backend (Fictício)</footer></blockquote>
+                    <blockquote class="bg-purple-50 p-6 rounded-lg shadow-sm border-l-4 border-pink-500"><p class="text-gray-700 italic text-sm">"Finalmente uma ferramenta que ajuda os meus novos talentos a serem produtivos desde a primeira semana. O acompanhamento do progresso é excelente."</p><footer class="mt-3 text-xs vivo-purple-text font-semibold">- Carlos, Gestor de TI (Fictício)</footer></blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="py-16 lg:py-24">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="section-title">Conclusão e Próximos Passos</h2>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">O <span class="vivo-purple-text font-semibold">Vivo Starter</span> é mais que uma plataforma, é o futuro da integração na Vivo, promovendo:</p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
+                <div class="bg-white p-4 rounded-lg shadow-md flex items-center space-x-3"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-sm">Rápida integração e produtividade.</span></div>
+                <div class="bg-white p-4 rounded-lg shadow-md flex items-center space-x-3"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-sm">Maior engajamento e retenção.</span></div>
+                <div class="bg-white p-4 rounded-lg shadow-md flex items-center space-x-3"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-sm">Centralização da informação.</span></div>
+                <div class="bg-white p-4 rounded-lg shadow-md flex items-center space-x-3"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-sm">Cultura Vivo fortalecida.</span></div>
+                <div class="bg-white p-4 rounded-lg shadow-md flex items-center space-x-3 sm:col-span-2 lg:col-span-1 lg:col-start-2"><svg class="icon-placeholder vivo-pink-text flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-sm">Suporte inteligente com Vivo Help.</span></div>
+            </div>
+            <p class="text-2xl vivo-purple-text font-semibold mb-10">Estamos prontos para co-criar esta transformação com a Vivo!</p>
+            <div class="bg-white p-8 rounded-lg shadow-xl inline-block">
+                <h3 class="text-xl font-semibold mb-3 vivo-purple-text">Equipa do Projeto:</h3>
+                <p class="text-gray-700">Syntax Terror</p>
+                <p class="text-gray-700">Luis Carlos - Lucas Ferreira - Mayara Santos - Graziely Tavares - Mariana Pacheco</p>
+                <p class="text-gray-700 mt-4"><strong>Contacto:</strong> <a href="mailto:SyntaxTerror@gmail.com" class="vivo-pink-text hover:underline">SyntaxTerror@gmail.com</a></p>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="vivo-purple text-white text-center py-10"><p class="text-sm">&copy; 2025 Vivo Starter. Apresentação para a Vivo.</p></footer>
+
+    <div id="featureModal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="closeModalButton" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl leading-none font-semibold">&times;</button>
+            <img id="modalImage" src="" alt="Imagem Ampliada da Funcionalidade" class="w-full h-auto max-h-[60vh] object-contain rounded-md mb-6 shadow-lg">
+            <h3 id="modalTitle" class="text-3xl font-bold mb-3 vivo-purple-text"></h3>
+            <p id="modalDescription" class="text-gray-700 text-base"></p>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle (código do menu mobile continua igual)
+        const menuToggler = document.getElementById('mobile-menu-toggler');
+        const menuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        menuToggler.addEventListener('click', () => { mobileMenu.classList.remove('menu-hidden'); mobileMenu.classList.add('menu-visible'); });
+        menuClose.addEventListener('click', () => { mobileMenu.classList.add('menu-hidden'); mobileMenu.classList.remove('menu-visible'); });
+        mobileNavLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.add('menu-hidden'); mobileMenu.classList.remove('menu-visible'); }); });
+
+        // Active Nav Link Styling on Scroll (código continua igual)
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav .nav-links a');
+        window.addEventListener('scroll', () => { let current = ''; sections.forEach(section => { const sectionTop = section.offsetTop; if (pageYOffset >= sectionTop - 80) { current = section.getAttribute('id'); } }); navLinks.forEach(link => { link.classList.remove('active-link', 'vivo-pink-text', 'font-semibold'); if (link.getAttribute('href').includes(current)) { link.classList.add('active-link', 'vivo-pink-text', 'font-semibold'); } }); });
+
+        // Chart.js Configurations (código dos gráficos continua igual)
+        Chart.defaults.font.family = 'Inter, sans-serif';
+        Chart.defaults.plugins.legend.labels.boxWidth = 12;
+        Chart.defaults.plugins.legend.labels.padding = 15;
+        Chart.defaults.plugins.title.font = { weight: '600', size: '14px'};
+        Chart.defaults.plugins.title.color = '#4A0072';
+        const desafioCtx = document.getElementById('desafioChart').getContext('2d');
+        new Chart(desafioCtx, { type: 'doughnut', data: { labels: ['Sentem-se Perdidos/Sobrec.', 'Sentem-se Confiantes'], datasets: [{ label: 'Engajamento no Onboarding', data: [70, 30], backgroundColor: ['#FF6384', '#660099'], borderColor: '#fff', borderWidth: 2, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } }, title: { display: false } } } });
+        const custosCtx = document.getElementById('custosChart').getContext('2d');
+        new Chart(custosCtx, { type: 'bar', data: { labels: ['Desenvolvimento', 'Licenças (Anual)', 'Implantação'], datasets: [{ label: 'Custo Estimado (R$)', data: [150000, 20000, 15000], backgroundColor: ['#660099', '#8332a2', '#a065cb'], borderRadius: 4, barPercentage: 0.7 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } }, plugins: { legend: { display: false }, title: { display: true, text: 'Estimativa de Custos MVP (R$)' } } } });
+        const roiCtx = document.getElementById('roiChart').getContext('2d');
+        new Chart(roiCtx, { type: 'pie', data: { labels: ['Redução Tempo Onboarding (25%)', 'Aumento Engajamento (40%)', 'Redução Turnover (15%)'], datasets: [{ label: 'Impacto Estimado', data: [25, 40, 15], backgroundColor: ['#4BC0C0', '#FFCE56', '#E6007E'], borderColor: '#fff', borderWidth: 2, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } }, title: { display: true, text: 'Principais Benefícios Quantificados (%)' } } } });
+        const metricasCtx = document.getElementById('metricasChart').getContext('2d');
+        new Chart(metricasCtx, { type: 'radar', data: { labels: ['Taxa Conclusão', 'Tempo Médio', 'NPS Onboarding', 'Engajamento Plataforma', 'Redução Chamados'], datasets: [{ label: 'Meta Inicial (%)', data: [90, 75, 60, 80, 70], fill: true, backgroundColor: 'rgba(102, 0, 153, 0.2)', borderColor: 'rgb(102, 0, 153)', pointBackgroundColor: 'rgb(102, 0, 153)', pointBorderColor: '#fff', pointHoverBackgroundColor: '#fff', pointHoverBorderColor: 'rgb(102, 0, 153)', borderWidth: 2, pointRadius: 4, pointHoverRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { display: true }, suggestedMin: 0, suggestedMax: 100, pointLabels: { font: {size: 10}} , ticks: { backdropColor: 'transparent', stepSize: 20 } } }, plugins: { legend: { position: 'top' }, title: { display: true, text: 'KPIs Alvo para o Vivo Starter' } } } });
+
+        // JavaScript para Modal dos Cards (código do modal continua igual)
+        const featureCards = document.querySelectorAll('.feature-card');
+        const modal = document.getElementById('featureModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const closeModalButton = document.getElementById('closeModalButton');
+        featureCards.forEach(card => { card.addEventListener('click', () => { const imgSrc = card.querySelector('img').src; const title = card.querySelector('.card-title').textContent; const description = card.querySelector('.card-description').textContent; modalImage.src = imgSrc; modalTitle.textContent = title; modalDescription.textContent = description; modal.classList.add('active'); document.body.classList.add('modal-active'); }); });
+        const closeModal = () => { modal.classList.remove('active'); document.body.classList.remove('modal-active'); }
+        closeModalButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (event) => { if (event.target === modal) { closeModal(); } });
+        document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.classList.contains('active')) { closeModal(); } });
+    </script>
+
+</body>
+</html>
