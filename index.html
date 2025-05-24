@@ -39,8 +39,10 @@
             border-radius: 0.75rem;
             padding: 2rem; 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            margin-bottom: 1.5rem;
+            /* margin-bottom: 1.5rem; /* Removido para o grid gap controlar o espaçamento vertical entre cards da mesma coluna */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; 
+            flex-direction: column; 
         }
         .feature-card:hover {
             transform: translateY(-5px) scale(1.02);
@@ -61,12 +63,14 @@
             padding: 1.5rem;
             border-radius: 0.75rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 1.5rem;
+            display: flex; 
+            flex-direction: column; 
         }
         .chart-container {
             max-width: 500px;
             margin: 0 auto;
             height: 300px;
+            flex-grow: 1; 
         }
         .sticky-nav {
             position: sticky;
@@ -141,56 +145,57 @@
             overflow: hidden;
         }
 
-        /* Estilos para o Diagrama de Arquitetura Visual */
         .arch-diagram {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem; /* Espaçamento entre as camadas principais */
+            gap: 0.5rem; 
             padding: 1.5rem;
-            background-color: #f9fafb; /* bg-gray-50 */
-            border-radius: 0.5rem; /* rounded-lg */
-            border: 1px solid #e5e7eb; /* border-gray-200 */
+            background-color: #f9fafb; 
+            border-radius: 0.5rem; 
+            border: 1px solid #e5e7eb; 
         }
         .arch-layer {
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 1rem; /* Espaçamento entre caixas na mesma camada */
+            gap: 1rem; 
             flex-wrap: wrap;
         }
         .arch-box {
             background-color: white;
-            border: 1px solid #d1d5db; /* border-gray-300 */
-            border-radius: 0.375rem; /* rounded-md */
-            padding: 0.75rem 1rem; /* py-3 px-4 */
+            border: 1px solid #d1d5db; 
+            border-radius: 0.375rem; 
+            padding: 0.75rem 1rem; 
             text-align: center;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
-            font-size: 0.875rem; /* text-sm */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); 
+            font-size: 0.875rem; 
             min-width: 120px;
+            flex-shrink: 0; 
         }
         .arch-box strong {
             display: block;
-            font-weight: 600; /* font-semibold */
-            color: #660099; /* vivo-purple-text */
+            font-weight: 600; 
+            color: #660099; 
             margin-bottom: 0.25rem;
         }
         .arch-arrow {
-            font-size: 1.5rem; /* text-2xl */
-            color: #9ca3af; /* text-gray-400 */
-            margin: 0.25rem 0;
+            margin: 0.5rem 0; 
+            line-height: 1; 
         }
         .arch-connectors {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-around; 
             width: 100%;
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
+            padding: 0 10%; 
+            margin-top: 0.25rem; 
+            margin-bottom: 0.25rem; 
+            position: relative; 
         }
         .arch-connector-line {
-            height: 20px; /* Altura da linha vertical */
-            width: 2px;   /* Largura da linha */
-            background-color: #9ca3af; /* text-gray-400 */
+            height: 25px; 
+            width: 2px;   
+            background-color: #9ca3af; 
         }
 
 
@@ -202,7 +207,9 @@
             .mobile-menu-button { display: block; }
             .modal-content { padding: 1.5rem; }
             .arch-box { font-size: 0.75rem; padding: 0.5rem; min-width: 100px;}
-            .arch-layer { flex-direction: column; align-items: center;}
+            .arch-layer { flex-direction: column; align-items: center; gap: 0.5rem;} 
+            .arch-connectors { flex-direction: column; align-items: center; height: auto; }
+            .arch-connector-line { height: 15px; margin-bottom: 0.25rem; } 
         }
         @media (min-width: 769px) {
             .mobile-menu-button { display: none; }
@@ -287,7 +294,7 @@
             <p class="text-xl text-gray-700 text-center mb-16 max-w-3xl mx-auto">
                 Uma plataforma de integração inteligente e gamificada, desenhada para transformar a jornada inicial do novo colaborador na Vivo, oferecendo uma experiência centralizada e engajadora.
             </p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Trilha.png" alt="[Imagem da Tela da Trilha de Integração do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Trilhas Personalizadas</h3><p class="text-gray-600 text-sm flex-grow card-description">Aprendizado adaptado ao cargo, com gamificação para motivar. Acompanhe progresso e prazos de forma clara no dashboard principal.</p></div>
                 <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Ferramentas.png" alt="[Imagem da Tela de Ferramentas Necessárias do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Hub de Ferramentas</h3><p class="text-gray-600 text-sm flex-grow card-description">Acesso e solicitação simplificada de ferramentas essenciais (VS Code, Jira, Slack), com status de aprovação transparente.</p></div>
                 <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Equipe.png" alt="[Imagem da Tela de Equipa e Organograma do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Conheça sua Equipa</h3><p class="text-gray-600 text-sm flex-grow card-description">Visualização clara da estrutura da equipa e organograma, facilitando a compreensão e o contacto com colegas e liderança.</p></div>
@@ -306,74 +313,75 @@
     <section id="viabilidade" class="py-16 lg:py-24">
         <div class="container mx-auto px-6">
             <h2 class="section-title">Detalhes Técnicos e Viabilidade</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-start">
-                <div>
-                    <div class="card">
-                        <h3 class="subsection-title flex items-center">
-                            <svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                            Arquitetura e Integrações
-                        </h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-sm">
-                            <li><strong>Frontend:</strong> React para uma UI moderna e responsiva.</li>
-                            <li><strong>Backend:</strong> Node.js com APIs RESTful.</li>
-                            <li><strong>Banco de Dados:</strong> PostgreSQL.</li>
-                            <li><strong>IA (Vivo Help & Personalização):</strong> NLP, treino com base de conhecimento Vivo.</li>
-                            <li><strong>Integrações Chave:</strong> APIs de plataformas Vivo.</li>
-                        </ul>
-                        <div class="mt-6 arch-diagram">
-                            <div class="arch-box"><strong>Utilizador</strong>(Navegador)</div>
-                            <div class="arch-arrow">↓</div>
-                            <div class="arch-box"><strong>Frontend (React)</strong>UI & Interação</div>
-                            <div class="arch-arrow">↓ <span class="text-xs text-gray-500">(API Calls)</span></div>
-                            <div class="arch-box"><strong>Backend (Node.js)</strong>Lógica & Orquestração</div>
-                            
-                            <div class="arch-connectors">
-                                <div class="arch-connector-line"></div>
-                                <div class="arch-connector-line"></div>
-                                <div class="arch-connector-line"></div>
-                            </div>
-
-                            <div class="arch-layer">
-                                <div class="arch-box"><strong>Base de Dados</strong>(PostgreSQL)<br><span class="text-xs text-gray-500">Dados do Utilizador, Conteúdo, Progresso</span></div>
-                                <div class="arch-box"><strong>Serviço de IA</strong>(Vivo Help & Pers.)<br><span class="text-xs text-gray-500">NLP, Base Conhecimento</span></div>
-                                <div class="arch-box"><strong>Sistemas Externos</strong>(Vivo)<br><span class="text-xs text-gray-500">SAP, MYACCESS, APIs</span></div>
-                            </div>
-                             <p class="text-xs text-gray-500 mt-3 text-center">Este é um diagrama conceitual simplificado.</p>
+            <div class="grid md:grid-cols-2 gap-12 items-start"> 
+                <div class="card"> 
+                    <h3 class="subsection-title flex items-center">
+                        <svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        Arquitetura e Integrações
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 text-sm">
+                        <li><strong>Frontend:</strong> React para uma UI moderna e responsiva.</li>
+                        <li><strong>Backend:</strong> Node.js com APIs RESTful.</li>
+                        <li><strong>Banco de Dados:</strong> PostgreSQL.</li>
+                        <li><strong>IA (Vivo Help & Personalização):</strong> NLP, treino com base de conhecimento Vivo.</li>
+                        <li><strong>Integrações Chave:</strong> APIs de plataformas Vivo.</li>
+                    </ul>
+                    <div class="mt-6 arch-diagram">
+                        <div class="arch-box"><strong>Utilizador</strong>(Navegador)</div>
+                        <div class="arch-arrow">
+                             <svg class="h-8 w-8 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" /></svg>
                         </div>
-                    </div>
-
-                    <div class="card" style="width: 1485px;">
-                         <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Benchmarking e Diferenciais</h3>
-                        <p class="text-gray-700 mb-3 text-sm">Analisamos soluções como Google Onboarding e Salesforce, além de plataformas de ATS/RH.</p>
-                        <p class="text-gray-700 font-semibold text-sm">Os nossos Diferenciais:</p>
-                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
-                            <li>Hiper-personalização para o contexto Vivo.</li>
-                            <li>Integração profunda com sistemas internos.</li>
-                            <li>Chatbot especialista (Vivo Help).</li>
-                            <li>Foco no setor de telecomunicações.</li>
-                        </ul>
-                        <div class="flex space-x-3 mt-4 justify-center">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Google</span>
-                            <span class="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-medium">Salesforce</span>
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">Outras ATS</span>
+                        <div class="arch-box"><strong>Frontend (React)</strong>UI & Interação</div>
+                        <div class="arch-arrow">
+                            <svg class="h-8 w-8 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" /></svg>
+                            <span class="text-xs text-gray-500 block text-center">(API Calls)</span>
                         </div>
+                        <div class="arch-box"><strong>Backend (Node.js)</strong>Lógica & Orquestração</div>
+                        <div class="arch-connectors">
+                            <div class="arch-connector-line"></div>
+                            <div class="arch-connector-line"></div>
+                            <div class="arch-connector-line"></div>
+                        </div>
+                        <div class="arch-layer">
+                            <div class="arch-box"><strong>Base de Dados</strong>(PostgreSQL)<br><span class="text-xs text-gray-500">Dados do Utilizador, Conteúdo, Progresso</span></div>
+                            <div class="arch-box"><strong>Serviço de IA</strong>(Vivo Help & Pers.)<br><span class="text-xs text-gray-500">NLP, Base Conhecimento</span></div>
+                            <div class="arch-box"><strong>Sistemas Externos</strong>(Vivo)<br><span class="text-xs text-gray-500">SAP, MYACCESS, APIs</span></div>
+                        </div>
+                         <p class="text-xs text-gray-500 mt-3 text-center">Este é um diagrama conceitual simplificado.</p>
                     </div>
                 </div>
-                <div>
-                    <div class="chart-container-wrapper">
-                        <h3 class="subsection-title text-center">Viabilidade Financeira (Estimativa)</h3>
-                        <div class="chart-container" style="height: 300px;"><canvas id="custosChart"></canvas></div>
-                        <p class="text-xs text-gray-500 mt-3 text-center">Custos de MVP estimados. Detalhes no apêndice.</p>
+
+                <div class="chart-container-wrapper"> 
+                    <h3 class="subsection-title text-center">Viabilidade Financeira (Estimativa)</h3>
+                    <div class="chart-container" style="height: 300px;"><canvas id="custosChart"></canvas></div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">Custos de MVP estimados. Detalhes no apêndice.</p>
+                </div>
+
+                <div class="card"> 
+                     <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Benchmarking e Diferenciais</h3>
+                    <p class="text-gray-700 mb-3 text-sm">Analisamos soluções como Google Onboarding e Salesforce, além de plataformas de ATS/RH.</p>
+                    <p class="text-gray-700 font-semibold text-sm">Os nossos Diferenciais:</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
+                        <li>Hiper-personalização para o contexto Vivo.</li>
+                        <li>Integração profunda com sistemas internos.</li>
+                        <li>Chatbot especialista (Vivo Help).</li>
+                        <li>Foco no setor de telecomunicações.</li>
+                    </ul>
+                    <div class="flex space-x-3 mt-4 justify-center">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Google</span>
+                        <span class="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-medium">Salesforce</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">Outras ATS</span>
                     </div>
-                    <div class="chart-container-wrapper mt-8" style="height: 541px; align-content: center;">
-                        <h3 class="subsection-title text-center">Projeção de ROI e Benefícios</h3>
-                         <div class="chart-container" style="height: 300px;"><canvas id="roiChart"></canvas></div>
-                        <ul class="list-disc list-inside text-gray-700 space-y-1 mt-4 text-sm pl-4">
-                            <li>Redução de <strong class="vivo-purple-text">25%</strong> no tempo de onboarding.</li>
-                            <li>Aumento de <strong class="vivo-purple-text">40%</strong> no engajamento com formações.</li>
-                            <li>Potencial de redução de turnover em <strong class="vivo-purple-text">15%</strong>.</li>
-                        </ul>
-                    </div>
+                </div>
+                
+                <div class="chart-container-wrapper"> 
+                    <h3 class="subsection-title text-center">Projeção de ROI e Benefícios</h3>
+                     <div class="chart-container" style="height: 300px;"><canvas id="roiChart"></canvas></div>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 mt-4 text-sm pl-4">
+                        <li>Redução de <strong class="vivo-purple-text">25%</strong> no tempo de onboarding.</li>
+                        <li>Aumento de <strong class="vivo-purple-text">40%</strong> no engajamento com formações.</li>
+                        <li>Potencial de redução de turnover em <strong class="vivo-purple-text">15%</strong>.</li>
+                    </ul>
                 </div>
             </div>
             <div class="chart-container-wrapper mt-12 lg:mt-16">
@@ -397,7 +405,7 @@
                     </ul>
                 </div>
                 <div class="card">
-                    <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Plano de Adoção e Engajamento</h3>
+                    <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Plano de Adoção e Engajamento</h3>
                     <ul class="list-disc list-inside text-gray-700 space-y-2 text-sm">
                         <li>Comunicação interna estratégica (lançamento, intranet).</li>
                         <li>Formação para gestores e colaboradores.</li>
