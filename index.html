@@ -39,7 +39,6 @@
             border-radius: 0.75rem;
             padding: 2rem; 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            /* margin-bottom: 1.5rem; /* Removido para o grid gap controlar o espaçamento vertical entre cards da mesma coluna */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex; 
             flex-direction: column; 
@@ -291,17 +290,44 @@
     <section id="solucao" class="py-16 lg:py-24 vivo-light-purple">
         <div class="container mx-auto px-6">
             <h2 class="section-title">Apresentando o <span class="vivo-pink-text">Vivo Starter</span></h2>
-            <p class="text-xl text-gray-700 text-center mb-16 max-w-3xl mx-auto">
-                Uma plataforma de integração inteligente e gamificada, desenhada para transformar a jornada inicial do novo colaborador na Vivo, oferecendo uma experiência centralizada e engajadora.
+            <p class="text-xl text-gray-700 text-center mb-8">
+                Uma plataforma de integração inteligente e gamificada, para transformar a jornada inicial do novo colaborador e também para auxiliar o gestor no acompanhamento da sua equipe.
             </p>
+            <p class="text-lg text-gray-600 text-center mb-16 max-w-3xl mx-auto">
+                Confira abaixo as principais funcionalidades, tanto para o colaborador quanto para o gestor:
+            </p>
+            
             <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Trilha.png" alt="[Imagem da Tela da Trilha de Integração do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Trilhas Personalizadas</h3><p class="text-gray-600 text-sm flex-grow card-description">Aprendizado adaptado ao cargo, com gamificação para motivar. Acompanhe progresso e prazos de forma clara no dashboard principal.</p></div>
-                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Ferramentas.png" alt="[Imagem da Tela de Ferramentas Necessárias do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Hub de Ferramentas</h3><p class="text-gray-600 text-sm flex-grow card-description">Acesso e solicitação simplificada de ferramentas essenciais (VS Code, Jira, Slack), com status de aprovação transparente.</p></div>
-                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Equipe.png" alt="[Imagem da Tela de Equipa e Organograma do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Conheça sua Equipa</h3><p class="text-gray-600 text-sm flex-grow card-description">Visualização clara da estrutura da equipa e organograma, facilitando a compreensão e o contacto com colegas e liderança.</p></div>
-                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Docs.png" alt="[Imagem da Tela de Documentação do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Documentação Inteligente</h3><p class="text-gray-600 text-sm flex-grow card-description">Manuais, políticas e guias organizados e acessíveis, com busca inteligente para encontrar informações rapidamente.</p></div>
-                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Explore.png" alt="[Imagem da Tela de Explore as Plataformas Vivo do Vivo Starter]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Explore Plataformas Vivo</h3><p class="text-gray-600 text-sm flex-grow card-description">Diretório para conhecer e aceder a outras plataformas internas da Vivo (Vibe, Gov App, Confluence), centralizando os pontos de partida.</p></div>
-                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Chat.png" alt="[Imagem da Tela do Vivo Help, o chatbot inteligente]" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Vivo Help – Suporte IA</h3><p class="text-gray-600 text-sm flex-grow card-description">Chatbot com IA para tirar dúvidas em tempo real sobre processos e ferramentas, aprendendo continuamente. Suporte imediato.</p></div>
+                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Trilha.png" alt="Tela da Trilha de Integração do Vivo Starter" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Trilhas Personalizadas (Colab.)</h3><p class="text-gray-600 text-sm flex-grow card-description">Aprendizado adaptado ao cargo, com gamificação para motivar. Acompanhe progresso e prazos de forma clara no dashboard principal.</p></div>
+                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Ferramentas.png" alt="Tela de Ferramentas Necessárias do Vivo Starter" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Hub de Ferramentas (Colab.)</h3><p class="text-gray-600 text-sm flex-grow card-description">Acesso e solicitação simplificada de ferramentas essenciais (VS Code, Jira, Slack), com status de aprovação transparente.</p></div>
+                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Equipe.png" alt="Tela de Equipe e Organograma do Vivo Starter" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Conheça sua Equipe (Colab.)</h3><p class="text-gray-600 text-sm flex-grow card-description">Visualização clara da estrutura da equipa e organograma, facilitando a compreensão e o contacto com colegas e liderança.</p></div>
+                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Docs.png" alt="Tela de Documentação do Vivo Starter" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Documentação Inteligente (Colab.)</h3><p class="text-gray-600 text-sm flex-grow card-description">Manuais, políticas e guias organizados e acessíveis, com busca inteligente para encontrar informações rapidamente.</p></div>
+                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Explore.png" alt="Tela de Explore as Plataformas Vivo do Vivo Starter" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Explore Plataformas Vivo (Colab.)</h3><p class="text-gray-600 text-sm flex-grow card-description">Diretório para conhecer e aceder a outras plataformas internas da Vivo (Vibe, Gov App, Confluence), centralizando os pontos de partida.</p></div>
+                <div class="card feature-card flex flex-col"><img src="Imagens/Tela_Chat.png" alt="Tela do Vivo Help, o chatbot inteligente" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg"><h3 class="subsection-title card-title">Vivo Help – Suporte IA (Colab.)</h3><p class="text-gray-600 text-sm flex-grow card-description">Chatbot com IA para tirar dúvidas em tempo real sobre processos e ferramentas, aprendendo continuamente. Suporte imediato.</p></div>
+
+                <div class="card feature-card flex flex-col">
+                    <img src="Imagens/Tela_GestaoEquipe.png" alt="Tela de Gestão da Equipe para Gestores" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg">
+                    <h3 class="subsection-title card-title">Gestão da Equipe (Gestor)</h3>
+                    <p class="text-gray-600 text-sm flex-grow card-description">
+                        Acompanhe o progresso de integração e desenvolvimento da sua equipe. Visualize feedbacks pendentes e progresso individual de cada membro.
+                    </p>
+                </div>
+                <div class="card feature-card flex flex-col">
+                    <img src="Imagens/Tela_GestaoFeedBacks.png" alt="Tela de Gestão de Feedbacks para Gestores" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg">
+                    <h3 class="subsection-title card-title">Gestão de Feedbacks (Gestor)</h3>
+                    <p class="text-gray-600 text-sm flex-grow card-description">
+                        Gerencie os feedbacks da sua equipe. Acompanhe avaliações passadas e agende novos feedbacks de forma centralizada.
+                    </p>
+                </div>
+                <div class="card feature-card flex flex-col">
+                    <img src="Imagens/Tela_GestaoDesempenho.png" alt="Tela de Dashboard de Desempenho para Gestores" class="w-full h-48 object-cover rounded-md mb-6 shadow-lg">
+                    <h3 class="subsection-title card-title">Dashboard de Desempenho (Gestor)</h3>
+                    <p class="text-gray-600 text-sm flex-grow card-description">
+                        Acompanhe o desempenho da sua equipe em tempo real. Visualize resultados e identifique destaques com gráficos claros e objetivos.
+                    </p>
+                </div>
             </div>
+
             <div class="mt-16 text-center">
                 <h3 class="text-2xl font-semibold text-gray-800 mb-4">Explore os nossos Protótipos Interativos</h3>
                 <p class="text-gray-600 mb-6 max-w-xl mx-auto">Desenvolvemos as telas da plataforma no Canva para proporcionar uma visão navegável da experiência do utilizador. Clique abaixo para explorar!</p>
@@ -351,13 +377,13 @@
                     </div>
                 </div>
 
-                <div class="chart-container-wrapper" style="height: 1000px;"> 
+                <div class="chart-container-wrapper"> 
                     <h3 class="subsection-title text-center">Viabilidade Financeira (Estimativa)</h3>
                     <div class="chart-container" style="height: 300px;"><canvas id="custosChart"></canvas></div>
                     <p class="text-xs text-gray-500 mt-3 text-center">Custos de MVP estimados. Detalhes no apêndice.</p>
                 </div>
 
-                <div class="card" style="height: 519px;"> 
+                <div class="card"> 
                      <h3 class="subsection-title flex items-center"><svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Benchmarking e Diferenciais</h3>
                     <p class="text-gray-700 mb-3 text-sm">Analisamos soluções como Google Onboarding e Salesforce, além de plataformas de ATS/RH.</p>
                     <p class="text-gray-700 font-semibold text-sm">Os nossos Diferenciais:</p>
@@ -385,8 +411,8 @@
                 </div>
             </div>
             <div class="chart-container-wrapper mt-12 lg:mt-16">
-                <h3 class="subsection-title text-center" >Métricas de Sucesso Quantificadas</h3>
-                <div class="chart-container" style="width: 100%; height: 320px;"><canvas id="metricasChart"></canvas></div>
+                <h3 class="subsection-title text-center">Métricas de Sucesso Quantificadas</h3>
+                <div class="chart-container" style="max-width: 480px; height: 320px;"><canvas id="metricasChart"></canvas></div>
                 <p class="text-gray-700 mt-4 text-center text-sm">Acompanharemos KPIs como taxa de conclusão, tempo médio, NPS, engajamento e redução de chamados.</p>
             </div>
         </div>
