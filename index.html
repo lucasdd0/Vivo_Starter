@@ -68,7 +68,7 @@
         .chart-container {
             max-width: 500px;
             margin: 0 auto;
-            height: 300px;
+            height: 300px; /* Default height, can be overridden inline */
             flex-grow: 1; 
         }
         .sticky-nav {
@@ -339,7 +339,7 @@
     <section id="viabilidade" class="py-16 lg:py-24">
         <div class="container mx-auto px-6">
             <h2 class="section-title">Detalhes Técnicos e Viabilidade</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-stretch">
+            <div class="grid md:grid-cols-2 gap-12 items-stretch"> <!-- CORREÇÃO APLICADA AQUI -->
                 <div class="card"> 
                     <h3 class="subsection-title flex items-center">
                         <svg class="icon-placeholder vivo-purple-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
@@ -412,7 +412,7 @@
             </div>
             <div class="chart-container-wrapper mt-12 lg:mt-16">
                 <h3 class="subsection-title text-center">Métricas de Sucesso Quantificadas</h3>
-                <div class="chart-container" style="max-width: 480px; height: 320px;"><canvas id="metricasChart"></canvas></div>
+                <div class="chart-container" style="max-width: 500px; height: 400px;"><canvas id="metricasChart"></canvas></div> <!-- ALTURA DO PENTÁGONO AUMENTADA AQUI -->
                 <p class="text-gray-700 mt-4 text-center text-sm">Acompanharemos KPIs como taxa de conclusão, tempo médio, NPS, engajamento e redução de chamados.</p>
             </div>
         </div>
@@ -484,7 +484,7 @@
     </div>
 
     <script>
-        // Mobile Menu Toggle (código do menu mobile continua igual)
+        // Mobile Menu Toggle
         const menuToggler = document.getElementById('mobile-menu-toggler');
         const menuClose = document.getElementById('mobile-menu-close');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -493,27 +493,67 @@
         menuClose.addEventListener('click', () => { mobileMenu.classList.add('menu-hidden'); mobileMenu.classList.remove('menu-visible'); });
         mobileNavLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.add('menu-hidden'); mobileMenu.classList.remove('menu-visible'); }); });
 
-        // Active Nav Link Styling on Scroll (código continua igual)
+        // Active Nav Link Styling on Scroll
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('nav .nav-links a');
         window.addEventListener('scroll', () => { let current = ''; sections.forEach(section => { const sectionTop = section.offsetTop; if (pageYOffset >= sectionTop - 80) { current = section.getAttribute('id'); } }); navLinks.forEach(link => { link.classList.remove('active-link', 'vivo-pink-text', 'font-semibold'); if (link.getAttribute('href').includes(current)) { link.classList.add('active-link', 'vivo-pink-text', 'font-semibold'); } }); });
 
-        // Chart.js Configurations (código dos gráficos continua igual)
+        // Chart.js Configurations
         Chart.defaults.font.family = 'Inter, sans-serif';
         Chart.defaults.plugins.legend.labels.boxWidth = 12;
         Chart.defaults.plugins.legend.labels.padding = 15;
         Chart.defaults.plugins.title.font = { weight: '600', size: '14px'};
         Chart.defaults.plugins.title.color = '#4A0072';
+        
         const desafioCtx = document.getElementById('desafioChart').getContext('2d');
         new Chart(desafioCtx, { type: 'doughnut', data: { labels: ['Sentem-se Perdidos/Sobrec.', 'Sentem-se Confiantes'], datasets: [{ label: 'Engajamento no Onboarding', data: [70, 30], backgroundColor: ['#FF6384', '#660099'], borderColor: '#fff', borderWidth: 2, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } }, title: { display: false } } } });
+        
         const custosCtx = document.getElementById('custosChart').getContext('2d');
         new Chart(custosCtx, { type: 'bar', data: { labels: ['Desenvolvimento', 'Licenças (Anual)', 'Implantação'], datasets: [{ label: 'Custo Estimado (R$)', data: [150000, 20000, 15000], backgroundColor: ['#660099', '#8332a2', '#a065cb'], borderRadius: 4, barPercentage: 0.7 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } }, plugins: { legend: { display: false }, title: { display: true, text: 'Estimativa de Custos MVP (R$)' } } } });
+        
         const roiCtx = document.getElementById('roiChart').getContext('2d');
         new Chart(roiCtx, { type: 'pie', data: { labels: ['Redução Tempo Onboarding (25%)', 'Aumento Engajamento (40%)', 'Redução Turnover (15%)'], datasets: [{ label: 'Impacto Estimado', data: [25, 40, 15], backgroundColor: ['#4BC0C0', '#FFCE56', '#E6007E'], borderColor: '#fff', borderWidth: 2, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } }, title: { display: true, text: 'Principais Benefícios Quantificados (%)' } } } });
+        
         const metricasCtx = document.getElementById('metricasChart').getContext('2d');
-        new Chart(metricasCtx, { type: 'radar', data: { labels: ['Taxa Conclusão', 'Tempo Médio', 'NPS Onboarding', 'Engajamento Plataforma', 'Redução Chamados'], datasets: [{ label: 'Meta Inicial (%)', data: [90, 75, 60, 80, 70], fill: true, backgroundColor: 'rgba(102, 0, 153, 0.2)', borderColor: 'rgb(102, 0, 153)', pointBackgroundColor: 'rgb(102, 0, 153)', pointBorderColor: '#fff', pointHoverBackgroundColor: '#fff', pointHoverBorderColor: 'rgb(102, 0, 153)', borderWidth: 2, pointRadius: 4, pointHoverRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { display: true }, suggestedMin: 0, suggestedMax: 100, pointLabels: { font: {size: 10}} , ticks: { backdropColor: 'transparent', stepSize: 20 } } }, plugins: { legend: { position: 'top' }, title: { display: true, text: 'KPIs Alvo para o Vivo Starter' } } } });
+        new Chart(metricasCtx, { 
+            type: 'radar', 
+            data: { 
+                labels: ['Taxa Conclusão', 'Tempo Médio', 'NPS Onboarding', 'Engajamento Plataforma', 'Redução Chamados'], 
+                datasets: [{ 
+                    label: 'Meta Inicial (%)', 
+                    data: [90, 75, 60, 80, 70], 
+                    fill: true, 
+                    backgroundColor: 'rgba(102, 0, 153, 0.2)', 
+                    borderColor: 'rgb(102, 0, 153)', 
+                    pointBackgroundColor: 'rgb(102, 0, 153)', 
+                    pointBorderColor: '#fff', 
+                    pointHoverBackgroundColor: '#fff', 
+                    pointHoverBorderColor: 'rgb(102, 0, 153)', 
+                    borderWidth: 2, 
+                    pointRadius: 4, 
+                    pointHoverRadius: 6 
+                }] 
+            }, 
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                scales: { 
+                    r: { 
+                        angleLines: { display: true }, 
+                        suggestedMin: 0, 
+                        suggestedMax: 100, 
+                        pointLabels: { font: {size: 12}},  /* TAMANHO DA FONTE DOS RÓTULOS DO PENTÁGONO AJUSTADO */
+                        ticks: { backdropColor: 'transparent', stepSize: 20 } 
+                    } 
+                }, 
+                plugins: { 
+                    legend: { position: 'top' }, 
+                    title: { display: true, text: 'KPIs Alvo para o Vivo Starter' } 
+                } 
+            } 
+        });
 
-        // JavaScript para Modal dos Cards (código do modal continua igual)
+        // JavaScript para Modal dos Cards
         const featureCards = document.querySelectorAll('.feature-card');
         const modal = document.getElementById('featureModal');
         const modalImage = document.getElementById('modalImage');
